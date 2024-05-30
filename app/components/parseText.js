@@ -71,16 +71,21 @@ export default function ParseInput() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
+    <div className="flex flex-col w-full justify-center items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="flex  flex-col w-full items-center "
+      >
+        <textarea
           type="text"
-          className="text-black w-full h-8 mb-4"
+          className="m-6 text-black w-[80%] h-16 lg:h-12 mb-4 p-4 rounded-lg"
           value={inputJson}
           onChange={handleInputChange}
           placeholder="Enter topology description"
         />
-        <button type="submit">Process Topologies</button>
+        <button type="submit" className="p-2 text-black bg-white rounded-lg">
+          Process Topologies
+        </button>
       </form>
       {/* {console.log(topologies)} */}
       <div className="flex flex-col justify-center items-center">

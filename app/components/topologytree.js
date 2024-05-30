@@ -16,7 +16,7 @@ function TopologyNode({ topology }) {
       </ul>
       {/* <p>{`${typeof nested}`}</p> */}
       {nested && nested.length > 0 && (
-        <div className="ml-[50px]">
+        <div className="ml-[40px]">
           {nested.map((nestedTopology, index) => (
             <TopologyNode key={index} topology={nestedTopology} />
           ))}

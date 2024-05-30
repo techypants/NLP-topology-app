@@ -7,7 +7,7 @@ import RingTopology from "./scripts/basic/ring.js";
 import MeshTopology from "./scripts/basic/mesh.js";
 import StarTopology from "./scripts/basic/star.js";
 import ParseText from "./scripts/parser/compromise/topo-parser";
-import ParseInput from "./components/parseText"
+import ParseInput from "./components/parseText";
 
 // Create a global DHCP server instance
 const dhcpServer = new DHCPServer(1, 250);
@@ -72,10 +72,9 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Network Topologies</h1>
+      <h1 className="text-[20px]">Network Topologies</h1>
 
-			<ParseInput/>
-
+      <ParseInput />
     </div>
   );
 }
