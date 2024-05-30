@@ -14,6 +14,7 @@ function processTopologies(topologyData, dhcpServer) {
   topologyData.forEach((topo) => {
     let TopologyClass = getTopologyClass(topo.type);
     let topologyInstance = new TopologyClass(topo.count, dhcpServer);
+    topologyInstance.type = topo.type;
     if (topo.nested && Array.isArray(topo.nested)) {
       topologyInstance.nested = processTopologies(topo.nested, dhcpServer);
     }
@@ -32,52 +33,61 @@ function getTopologyClass(type) {
       return StarTopology;
     case "mesh topology":
       return MeshTopology;
+    default:
+      throw new Error(`Unknown topology type: ${type}`);
   }
 }
 
-export default function ParseInput(inputText) {
-  const [inputdata, setInput] = useState(null);
-  const [inputJson, setInputJson] = useState("");
-  const [topologies, setTopologies] = useState([]);
+export default function ParseInput() {
+  const [inputJson, setInputJson] = useState("4 system star topology");
 
-  // const handleInputChange = (e) => {
-  //   setInputJson(e.target.value);
-  // };
+  const [topologies, setTopologies] = useState([]);
+  const [modeljson, setmodeljson] = useState([]);
+
+  const handleInputChange = (e) => {
+    setInputJson(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      setInput(ParseText(e.target.value));
+      const parsedText = ParseText(inputJson);
+      console.log(typeof parsedText);
 
-      const parsedJson = JSON.parse(inputdata);
+      const parsedJson = JSON.parse(parsedText);
+      setmodeljson(parsedJson.topologies);
+
       const processedTopologies = processTopologies(
         parsedJson.topologies,
         dhcpServer
       );
       setTopologies(processedTopologies);
     } catch (error) {
-      alert("Invalid JSON format. Please check your input.");
-      console.error(error);
+      console.error(
+        "Invalid format or JSON parsing error. Please check your input.",
+        error
+      );
     }
   };
 
-  // console.log(inputdata);
   return (
     <div>
-      <input
-        type="text"
-        className="text-black w-full h-8 mb-4"
-        onChange={(e) => {
-          setInput(ParseText(e.target.value));
-        }}
-      ></input>
       <form onSubmit={handleSubmit}>
-    
+        <input
+          type="text"
+          className="text-black w-full h-8 mb-4"
+          value={inputJson}
+          onChange={handleInputChange}
+          placeholder="Enter topology description"
+        />
         <button type="submit">Process Topologies</button>
       </form>
-      <TopologyTree topologies={topologies} />
+      {/* {console.log(topologies)} */}
+      <div className="flex flex-col justify-center items-center">
+        <TopologyTree topologies={topologies} />
+      </div>
       {console.log(topologies)}
+      {/* {console.log(inputJson)}  */}
     </div>
   );
 }
-//3 system star topology and [within a ring topology: 5 system mesh topology]

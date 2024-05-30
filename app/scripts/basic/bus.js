@@ -20,7 +20,7 @@ export default class BusTopology {
     this.dhcpserver = dhcpserver;
     const bus = new Node("bus");
     bus.ip = this.dhcpserver.allocateIP();
-    for (let i = 0; i < numNodes; i++) {
+    for (let i = 0; i < numNodes; ++i) {
       const node = new Node(i);
       node.ip = this.dhcpserver.allocateIP();
       this.nodes.push(node);
