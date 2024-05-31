@@ -83,9 +83,7 @@ export default function ParseInput() {
           onChange={handleInputChange}
           placeholder="Enter topology description"
         />
-        <button type="submit" className="p-2 text-black bg-white rounded-lg">
-          Process Topologies
-        </button>
+        <button type="submit" className="p-2 text-black bg-white rounded-lg">Process Topologies</button>
       </form>
       {/* {console.log(topologies)} */}
       <div className="flex flex-col justify-center items-center">
